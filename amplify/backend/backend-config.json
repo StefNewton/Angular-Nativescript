@@ -1,0 +1,15 @@
+{
+	"auth": {
+		"nativescriptangularea48007e": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": []
+		}
+	},
+	"storage": {
+		"s3221f524e": {
+			"service": "S3",
+			"providerPlugin": "awscloudformation"
+		}
+	}
+}

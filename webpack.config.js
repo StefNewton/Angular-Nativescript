@@ -15,6 +15,25 @@ const TerserPlugin = require("terser-webpack-plugin");
 const { getAngularCompilerPlugin } = require("nativescript-dev-webpack/plugins/NativeScriptAngularCompilerPlugin");
 const hashSalt = Date.now().toString();
 
+// Add aliases
+const shims = require('nativescript-nodeify/shims.json');
+const aliases = {};
+for (const key of Object.keys(shims)) {
+        const value = shims[key];
+        aliases[key + '$'] = value;
+}
+aliases['inherits$'] = 'inherits/inherits_browser';
+
+// Remove hook, as this will only cause problems at this point.
+// Checking and deleting within webpack ensures that it will be deleted during a cloud build.
+let fs = require("fs");
+let process = require("process");
+if (fs.existsSync(__dirname + "/hooks/after-prepare/nativescript-nodeify.js")) {
+	process.stdout.write("Found evil hook, deleting...\n");
+	fs.unlinkSync(__dirname + "/hooks/after-prepare/nativescript-nodeify.js");
+	process.stdout.write("Should be fixed now.\n");
+} else process.stdout.write("Hooks seem clean, moving on.\n");
+
 module.exports = env => {
     // Add your custom Activities, Services and other Android app components here.
     const appComponents = [
@@ -35,8 +54,7 @@ module.exports = env => {
 
     const {
         // The 'appPath' and 'appResourcesPath' values are fetched from
-        // the nsconfig.json configuration file
-        // when bundling with `tns run android|ios --bundle`.
+        // the nsconfig.json configuration file.
         appPath = "src",
         appResourcesPath = "App_Resources",
 
@@ -132,6 +150,7 @@ module.exports = env => {
             hashSalt
         },
         resolve: {
+            aliasFields: ["browser"], // <-- ADDED LINE
             extensions: [".ts", ".js", ".scss", ".css"],
             // Resolve {N} system modules from tns-core-modules
             modules: [
@@ -140,9 +159,12 @@ module.exports = env => {
                 "node_modules/tns-core-modules",
                 "node_modules",
             ],
-            alias: {
-                '~': appFullPath
-            },
+            // alias: {
+            //     '~': appFullPath
+            // },
+            alias: Object.assign({
+                '~': resolve(appFullPath)
+            }, aliases),
             symlinks: true
         },
         resolveLoader: {
@@ -155,6 +177,9 @@ module.exports = env => {
             "setImmediate": false,
             "fs": "empty",
             "__dirname": false,
+            "net": "empty",
+            "child_process": "empty",
+            "dgram": "empty"
         },
         devtool: hiddenSourceMap ? "hidden-source-map" : (sourceMap ? "inline-source-map" : "none"),
         optimization: {

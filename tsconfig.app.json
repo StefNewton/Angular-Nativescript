@@ -3,8 +3,14 @@
   "compilerOptions": {
     "outDir": "./out-tsc/app",
     "module": "es2015",
-    "types": [],
+    "types": ["node"],
     "paths": {
+      "timers": [
+        "node_modules/timers-browserify"
+      ],
+      "stream": [
+        "node_modules/stream-browserify"
+      ],
       "@src/*": [
         "src/*.web",
         "src/*"

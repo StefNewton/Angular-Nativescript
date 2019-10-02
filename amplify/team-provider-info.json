@@ -1,0 +1,19 @@
+{
+    "env": {
+        "awscloudformation": {
+            "AuthRoleName": "nativescript-angular-env-20191001135449-authRole",
+            "UnauthRoleArn": "arn:aws:iam::304404864622:role/nativescript-angular-env-20191001135449-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::304404864622:role/nativescript-angular-env-20191001135449-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "nativescript-angular-env-20191001135449-deployment",
+            "UnauthRoleName": "nativescript-angular-env-20191001135449-unauthRole",
+            "StackName": "nativescript-angular-env-20191001135449",
+            "StackId": "arn:aws:cloudformation:us-east-1:304404864622:stack/nativescript-angular-env-20191001135449/ab465f90-e485-11e9-a293-120371d9064c"
+        },
+        "categories": {
+            "auth": {
+                "nativescriptangularea48007e": {}
+            }
+        }
+    }
+}

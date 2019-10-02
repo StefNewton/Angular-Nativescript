@@ -4,6 +4,12 @@
     "module": "es2015",
     "moduleResolution": "node",
     "paths": {
+      "timers": [
+        "node_modules/timers-browserify"
+      ],
+      "stream": [
+        "node_modules/stream-browserify"
+      ],
       "@src/*": [
         "src/*.tns.ts",
         "src/*.ts"

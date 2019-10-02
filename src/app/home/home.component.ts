@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+require('nativescript-nodeify');
+import { AuthService } from '@src/app/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -11,5 +13,6 @@ export class HomeComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
   }
 }
